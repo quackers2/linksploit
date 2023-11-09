@@ -65,6 +65,7 @@ def change_settings(cmd : str):
 def main():
   while(1):
     cmd = input(">> ")
+    cmd = cmd.lower()
     exploit = settings["exploit"]
 
     if cmd == "exit":
