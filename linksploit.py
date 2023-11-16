@@ -1,4 +1,5 @@
-from exploits import command_line_injection
+from exploits import ping_ip_exploit
+from exploits import ping_size_exploit
 from exploits import moon_exploit
 
 settings = {
@@ -40,8 +41,8 @@ def change_settings(cmd : str):
     return
   
   try:
-    if setting == "exploit" and value not in ["moon", "ping"]:
-      print(f"Setting for exploit must be either 'moon' or 'ping'")
+    if setting == "exploit" and value not in ["moon", "ping_size", "ping_ip"]:
+      print(f"Setting for exploit must be either 'moon', 'ping_ip', or 'ping_size'")
       return
     
     if setting == "verify" or setting == "allow_redirects":
@@ -61,8 +62,23 @@ def change_settings(cmd : str):
     print(f"Invalid setting for {setting}")
 
 
+def print_intro():
+  logo = '''
+    ██╗░░░░░██╗███╗░░██╗██╗░░██╗░██████╗██████╗░██╗░░░░░░█████╗░██╗████████╗
+    ██║░░░░░██║████╗░██║██║░██╔╝██╔════╝██╔══██╗██║░░░░░██╔══██╗██║╚══██╔══╝
+    ██║░░░░░██║██╔██╗██║█████═╝░╚█████╗░██████╔╝██║░░░░░██║░░██║██║░░░██║░░░
+    ██║░░░░░██║██║╚████║██╔═██╗░░╚═══██╗██╔═══╝░██║░░░░░██║░░██║██║░░░██║░░░
+    ███████╗██║██║░╚███║██║░╚██╗██████╔╝██║░░░░░███████╗╚█████╔╝██║░░░██║░░░
+    ╚══════╝╚═╝╚═╝░░╚══╝╚═╝░░╚═╝╚═════╝░╚═╝░░░░░╚══════╝░╚════╝░╚═╝░░░╚═╝░░░'''
+
+  print('\n\n' + logo + '\n\n')
+  print('Welcome to Linksploit. For help, please refer to the github page.\n\nCurrent Settings:\n')
+  print_settings()
+
 
 def main():
+  print_intro()  
+
   while(1):
     cmd = input(">> ")
     cmd = cmd.lower()
@@ -77,7 +93,11 @@ def main():
       print_settings()
     elif exploit == "moon":
       moon_exploit(settings = settings, cmd = cmd)
+    elif exploit == "ping_ip":
+      ping_ip_exploit(settings = settings, cmd = cmd)
     else:
-      command_line_injection(settings = settings, cmd = cmd)
+      ping_size_exploit(settings = settings, cmd = cmd)
 
 main()
+
+
